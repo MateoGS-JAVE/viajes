@@ -1,10 +1,15 @@
 <?php
-$nombre = htmlspecialchars($_POST['nombre'] ?? '');
-$correo = htmlspecialchars($_POST['correo'] ?? '');
+function escapar(string $valor): string
+{
+    return htmlspecialchars($valor, ENT_QUOTES, 'UTF-8');
+}
 
-$destinos = $_POST['destinos'] ?? [];
-$actividades = $_POST['actividades'] ?? [];
-$servicios = $_POST['servicios'] ?? [];
+$nombre = htmlspecialchars((string) ($_POST['nombre'] ?? ''), ENT_QUOTES, 'UTF-8');
+$correo = htmlspecialchars((string) ($_POST['correo'] ?? ''), ENT_QUOTES, 'UTF-8');
+
+$destinos = is_array($_POST['destinos'] ?? null) ? $_POST['destinos'] : [];
+$actividades = is_array($_POST['actividades'] ?? null) ? $_POST['actividades'] : [];
+$servicios = is_array($_POST['servicios'] ?? null) ? $_POST['servicios'] : [];
 
 $totalDestinos = count($destinos);
 $totalActividades = count($actividades);
@@ -20,7 +25,7 @@ $totalGeneral = $totalDestinos + $totalActividades + $totalServicios;
 <body>
     <h1>Resumen del paquete turístico</h1>
 
-    <h2>Datos del clienteh2>
+    <h2>Datos del cliente</h2>
     <p><strong>Nombre:</strong> <?= $nombre ?></p>
     <p><strong>Correo electrónico:</strong> <?= $correo ?></p>
 
@@ -28,7 +33,7 @@ $totalGeneral = $totalDestinos + $totalActividades + $totalServicios;
     <?php if (!empty($destinos)): ?>
         <ul>
             <?php foreach ($destinos as $destino): ?>
-                <li><?= htmlspecialchars($destino) ?></li>
+                <li><?= escapar(is_string($destino) ? $destino : '') ?></li>
             <?php endforeach; ?>
         </ul>
     <?php else: ?>
@@ -40,7 +45,7 @@ $totalGeneral = $totalDestinos + $totalActividades + $totalServicios;
     <?php if (!empty($actividades)): ?>
         <ul>
             <?php foreach ($actividades as $actividad): ?>
-                <li><?= htmlspecialchars($actividad) ?></li>
+                <li><?= escapar(is_string($actividad) ? $actividad : '') ?></li>
             <?php endforeach; ?>
         </ul>
     <?php else: ?>
@@ -52,7 +57,7 @@ $totalGeneral = $totalDestinos + $totalActividades + $totalServicios;
     <?php if (!empty($servicios)): ?>
         <ul>
             <?php foreach ($servicios as $servicio): ?>
-                <li><?= htmlspecialchars($servicio) ?></li>
+                <li><?= escapar(is_string($servicio) ? $servicio : '') ?></li>
             <?php endforeach; ?>
         </ul>
     <?php else: ?>

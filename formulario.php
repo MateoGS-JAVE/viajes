@@ -7,10 +7,10 @@
 <body>
     <h1>Personaliza tu paquete turístico</h1>
 
-    <form action="resultados.php" method="POST">
+    <form action="/viajes/procesaminto.php" method="POST">
         <h2>Datos del cliente</h2>
-        <p>,
-            <label>Nombre completo:</label><br>
+        <p>
+           <label>Nombre completo:</label><br>
             <input type="text" name="nombre" required>
         </p>
         <p>
